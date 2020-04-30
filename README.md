@@ -37,6 +37,7 @@
         - [mv](#mv)
             - [Renaming Using mv](#renaming-using-mv)
         - [rm](#rm)
+    - [The End!](#the-end)
 
 <!-- /TOC -->
 
@@ -739,3 +740,7 @@ rm -r mydir
 > - Remove the `~/deleteme` directory and all its contents!
 >
 > If you have done this exercise correctly, you should no longer have any of the files you created in these exercises.  Squeaky clean!
+
+## The End!
+
+Congratulations, you now have the basic skills necessary to use a CLI shell!  You have completed an important step toward becoming an efficient computer user.
