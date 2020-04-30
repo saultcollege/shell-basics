@@ -48,7 +48,7 @@ This tutorial introduces basic interaction with Unix-style command line shells s
 
 A shell is a user interface that allows a person to interact with a computer operating system such as Windows, MacOS, or Linux.  Some shells have a Graphical User Interface (GUI), but many have a simple Command Line Interface (CLI) into which the user may type commands that the operating system will then execute.  Commands may or may not produce text output that is also presented in the CLI.
 
-A CLI shell is one of the primary tools used by programmers to inspect and configure the devices they are working on, so it is important for you as a budding programmer to get comfortable with using one.
+A CLI shell is one of the primary tools used by programmers and computer administrators to inspect and configure the devices they are working on.
 
 > **_NOTE:_**
 > The terms `console` and `terminal` are often used interchangeably with the term `shell`.  For this tutorial that is all you need to know, but there are technically some differences between the three concepts.  You can read more in [this StackExchange answer](https://superuser.com/a/144668) if you are interested.
