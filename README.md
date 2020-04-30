@@ -6,7 +6,6 @@
     - [Introduction](#introduction)
     - [What is a Shell?](#what-is-a-shell)
         - [Examples of Command Line Shells](#examples-of-command-line-shells)
-        - [Learning to use CLI Shells is Important](#learning-to-use-cli-shells-is-important)
     - [The Interface](#the-interface)
             - [Sample CLI session](#sample-cli-session)
         - [Basic Command Syntax](#basic-command-syntax)
@@ -49,6 +48,8 @@ This tutorial introduces basic interaction with Unix-style command line shells s
 
 A shell is a user interface that allows a person to interact with a computer operating system such as Windows, MacOS, or Linux.  Some shells have a Graphical User Interface (GUI), but many have a simple Command Line Interface (CLI) into which the user may type commands that the operating system will then execute.  Commands may or may not produce text output that is also presented in the CLI.
 
+A CLI shell is one of the primary tools used by programmers to inspect and configure the devices they are working on, so it is important for you as a budding programmer to get comfortable with using one.
+
 > **_NOTE:_**
 > The terms `console` and `terminal` are often used interchangeably with the term `shell`.  For this tutorial that is all you need to know, but there are technically some differences between the three concepts.  You can read more in [this StackExchange answer](https://superuser.com/a/144668) if you are interested.
 
@@ -66,10 +67,6 @@ There are many CLI shells available, but the table below lists the ones you will
 
 > **_NOTE:_**
 > This tutorial focuses on Unix-style shells, which all support a common set of commands.  Git Bash, bash, and zsh are all Unix-style shells.  If you are on a Windows device, you should be able to follow along in this tutorial using Git Bash.  If you are using PowerShell, see [this reference](files/PowerShell-equivalents-for-common-linux-commands.pdf) of PowerShell equivalents for common bash commands.
-
-### Learning to use CLI Shells is Important
-
-A CLI shell is one of the primary tools used by programmers to inspect and configure the devices they are working on, so it is important for you as a budding programmer to get comfortable with using one.
 
 ## The Interface
 
