@@ -1,5 +1,45 @@
 # Command Line Shell Basics
 
+<!-- TOC -->
+
+- [Command Line Shell Basics](#command-line-shell-basics)
+    - [Introduction](#introduction)
+    - [What is a Shell?](#what-is-a-shell)
+        - [Examples of Command Line Shells](#examples-of-command-line-shells)
+        - [Learning to use CLI Shells is Important](#learning-to-use-cli-shells-is-important)
+    - [The Interface](#the-interface)
+            - [Sample CLI session](#sample-cli-session)
+        - [Basic Command Syntax](#basic-command-syntax)
+        - [Command Arguments](#command-arguments)
+        - [Command Options](#command-options)
+            - [Multiple Options](#multiple-options)
+            - [Order of Options](#order-of-options)
+            - [Multiple Short Form Options](#multiple-short-form-options)
+            - [Parameterized Options](#parameterized-options)
+    - [Cancelling Commands](#cancelling-commands)
+    - [Getting Information About Commands](#getting-information-about-commands)
+    - [File System Navigation](#file-system-navigation)
+        - [The Working Directory](#the-working-directory)
+        - [Changing the Working Directory](#changing-the-working-directory)
+        - [Paths](#paths)
+            - [Absolute Paths](#absolute-paths)
+            - [Relative Paths](#relative-paths)
+            - [Paths and Spaces](#paths-and-spaces)
+            - [Paths with Wildcards (AKA Globs)](#paths-with-wildcards-aka-globs)
+    - [File System Inspection](#file-system-inspection)
+        - [cat](#cat)
+        - [head & tail](#head--tail)
+        - [nano](#nano)
+    - [File System Manipulation](#file-system-manipulation)
+        - [mkdir & rmdir](#mkdir--rmdir)
+        - [touch](#touch)
+        - [cp](#cp)
+        - [mv](#mv)
+            - [Renaming Using mv](#renaming-using-mv)
+        - [rm](#rm)
+
+<!-- /TOC -->
+
 ## Introduction
 
 This tutorial introduces basic interaction with Unix-style command line shells such as Bash (although the concepts introduced here will also be useful in Windows Powershell).  By the end of the tutorial you should understand how to run commands in a shell, and you should be able to use a shell to navigate, inspect, and manipulate a file system.
@@ -8,7 +48,7 @@ This tutorial introduces basic interaction with Unix-style command line shells s
 
 A shell is a user interface that allows a person to interact with a computer operating system such as Windows, MacOS, or Linux.  Some shells have a Graphical User Interface (GUI), but many have a simple Command Line Interface (CLI) into which the user may type commands that the operating system will then execute.  Commands may or may not produce text output that is also presented in the CLI.
 
-> ##### Shell vs Console vs Terminal
+> **_NOTE:_**
 > The terms `console` and `terminal` are often used interchangeably with the term `shell`.  For this tutorial that is all you need to know, but there are technically some differences between the three concepts.  You can read more in [this StackExchange answer](https://superuser.com/a/144668) if you are interested.
 
 ### Examples of Command Line Shells
@@ -23,7 +63,7 @@ There are many CLI shells available, but the table below lists the ones you will
 | PowerShell | Windows |
 | zsh        | Linux terminal |
 
-> ##### Note
+> **_NOTE:_**
 > This tutorial focuses on Unix-style shells, which all support a common set of commands.  Git Bash, bash, and zsh are all Unix-style shells.  If you are on a Windows device, you should be able to follow along in this tutorial using Git Bash.  If you are using PowerShell, see [this reference](files/PowerShell-equivalents-for-common-linux-commands.pdf) of PowerShell equivalents for common bash commands.
 
 ### Learning to use CLI Shells is Important
@@ -57,7 +97,7 @@ After a command has finished executing, the shell once again displays the prompt
 
 With this simple usage pattern, you can examine and manipulate almost any aspect of your computer system if you know the right commands!
 
-> ##### Note
+> **_NOTE:_**
 > Your shell will probably show a different prompt than the ones you see in this tutorial, but the usage pattern will be the same.
 
 ### Basic Command Syntax
@@ -72,7 +112,7 @@ ls -a /Users/ali
 
 is a command that lists the contents of the directory `/Users/ali`, including hidden files.  The name of the command is `ls`.  The option `-a` causes the `ls` command to include hidden files in its output.  Finally, the argument `/Users/ali` is the directory for which the contents are to be listed.
 
-> ##### Note
+> **_NOTE:_**
 > You may notice the use of terms inside of angle brackets in the documentation for command line tools, a as in `ls <pathname>`. The angle-bracketed terms are usually placeholders describing what you should *actually* type when using the command.  You should *not* include the angle brackets in an actual command.  For example, `ls </Users/ali>` would be an incorrect interpretation of the previous documentation; `ls /Users/ali` would be correct.
 
 Many commands can be used without any options or arguments at all.  For example, the command `ls` by itself simply lists all non-hidden files and directories in the current working directory.  (Don't worry if you don't understand the term "working directory". We will define that soon!)
@@ -91,7 +131,7 @@ For example, the above command could also have been written as
 ls --all /Users/ali
 ```
 
-> ##### NOTE
+> **_NOTE:_**
 > Depending on your platform, the `ls` command may not support the long-form options
 
 Long-form option names are usually more descriptive and easier to remember, but you will want to learn the most common short forms for the most common commands to make typing the commands quicker.
@@ -140,6 +180,10 @@ Of course, the two versions of the `--sort` option indicated above have short fo
 ls -S /Users/ali
 ```
 
+## Cancelling Commands
+
+In some situations, especially for commands that take a long time to run, you may wish to cancel a command that you have issued to a shell.  You can do so by pressing `Ctrl+c`.
+
 ## Getting Information About Commands
 
 Most commands come with extensive documentation in a "manual page" that can be viewed using the `man` (short for "manual") command.
@@ -150,10 +194,10 @@ For example, the command below prints out the manual page for the `ls` command.
 man ls
 ```
 
-> ##### Note
+> **_NOTE:_**
 > Unfortunately, Git Bash does not include manual pages, but you can view the manuals for most commands on [this website](https://linux.die.net/man/).
 
-> ##### Note
+> **_NOTE:_**
 > Manual pages can be quite long, and some shells will allow you to move up and down within the text using the `j` and `k` keys, respectively. You can also exit the manual page before you reach the end by typing `q` (for quit).
 
 The `whatis` command can be used to print a short description of other commands.
@@ -162,7 +206,7 @@ Many commands also have a `--help` option that prints a short message describing
 
 It is often important to know which version of a command is on your system, which most commands will display when run with the `--version` option.
 
-## File System Navigation & Manipulation
+## File System Navigation
 
 From this point on you should have a shell open on your computer and follow along by entering the commands into your shell.
 
@@ -185,40 +229,513 @@ For example, the command `cd /` changes the working directory to the root direct
 
 ### Paths
 
-A path describes the set of directories that must be opened to get to some descendant directory.
+Before going any further, let's make sure you understand what is meant by a path.  A path describes the set of directories that must be opened to get to some final directory or file on a computer system.
 
-For example, suppose the 
+For example, suppose you have the following directory structure on your computer:
 
 ```
     /
     +-- www/ 
     |   +-- images/
     |   |   +-- logo.png
-    |   |   +-- mugshot.jpg
+    |   |   +-- my-face.jpg
     |   |
-    |   +-- about/
-    |   |   +- index.html
+    |   +-- about me/
+    |   |   +-- index.html
     |   |
-    |   +- index.html
+    |   +-- index.html
     |
     +-- Users/ 
-        +- ali/
+        +-- ali/
+            +-- Documents/
 ```
+
+Here are a few paths in this structure:
+
+```bash
+/
+/www
+/www/images/logo.png
+/Users
+/Users/ali
+```
+
+> **_NOTE:_**
+> In Unix-style shells, directory names are separated using the `/` symbol, but in Windows shells, the `\` symbol is the default.  However, in both PowerShell and Git Bash, either symbol may be used when typing paths.
 
 #### Absolute Paths
 
+All of the above paths are absolute paths.  That is, they begin at the root of the file system, and specify the sequence of directories from there to the final directory or file in the path.  
+
+> **_NOTE:_**
+> If you are using Git Bash, the root directory is **not** the root of your C drive.  You can change to the root of your C drive using the command `cd /c`.  (A similar command can be used to change to the root of any drive letter on your system.)
+
+You must list **every** sequential directory in a path, otherwise the path is invalid and the command will not be able to find the file or directory.
+
+For example, all the following paths are invalid:
+
+```bash
+/images/logo.png
+/www/logo.png
+/Users/bobbie
+```
+
+The first path specifies a directory named 'images' in the root directory, but there is no such directory.  The second path specifies a file named 'logo.png' inside the 'www' directory, but there is no such file.  The third path specifies a directory named 'bobbie' inside the 'Users' directory, but there is no such directory.
+
+> **_EXERCISE_**
+>
+> Use the `cd` command to navigate to several different absolute paths in your system.  Use the `pwd` command to verify that your `cd` commands worked.
+
+> **_TIP:_** Most shells features 'tab completion', meaning that if you begin typing the name of a directory in a path and then press the `tab` key, then if what you have typed so far can only be one possible directory or file the shell will complete the name automatically.  If what you have typed so far is *not* a unique prefix, pressing `tab` a second time will print a list of directory and file names that start with what you have typed so far.
+
 #### Relative Paths
 
-#### The User Home Directory
+It is also possible to use paths that are relative to the current working directory.  
 
+The `.` symbol at the beginning of a path represents the current working directory.
 
-## Useful Unix Shell Commands
+Consider the following shell session:
 
-Below is a list of common useful shell commands.  
+```bash
+> cd /www
+> pwd
+/www
+> cd ./images
+> pwd
+/www/images
+```
 
-This is by no means a complete list of commands, nor does it list all of the options available for each command.  See the Linux man pages for a more exhaustive list (and keep in mind that not all Unix-style shells will )
+Here, we change to the `/www` directory, and then change from there to the `images` directory which is inside the `www` directory.
 
-Name | Description | Options
----|---|---
+> **_NOTE:_**
+> If the `./` symbol is the first part of a path it can usually be left off.  So the commands `cd ./images` and `cd images` have the same meaning.
 
-## PowerShell
+The `..` symbol in a path represents the parent directory of the current directory in the path.  If the `..` symbol is at the beginning of the path it represents the parent directory of the current working directory.
+
+Example:
+
+```bash
+> cd /www/images
+> cd ..
+> pwd
+/www
+```
+
+You may use multiple instances of `..` in a path
+
+Example:
+
+```bash
+> cd /Users/ali/
+> cd ../../www/images
+> pwd
+/www/images
+```
+
+The `~` symbol at the beginning of a path represents the user's home directory.
+
+Example:
+
+```bash
+> cd /www
+> cd ~
+> pwd
+/Users/ali
+> cd ~/Documents
+> pwd
+/Users/ali/Documents
+```
+
+And here as an example that combines the `~` and `..` symbols to change to the parent directory of the user's home directory.  (The `..` symbol does not need to be at the beginning of a path.)
+
+```bash
+> cd ~/..
+> pwd
+/Users
+```
+
+> **_EXERCISE_**
+>
+> Use the `cd` command to navigate to several different directories in your system.  Use relative paths, and experiment with using various combinations of the `.`, `..`, and `~` symbols.  (Don't worry, you can't break anything with the `cd` command.)
+
+#### Paths and Spaces
+
+Some file and directory names contain spaces, which can cause problems for shells because spaces separate the different parts of a shell command.
+
+For example, the command `cd /www/about me` would not work because the shell would interpret this as a command with two separate arguments, `/www/about` and `me`.
+
+To avoid this problem, spaces in paths must be 'escaped' using the `\` symbol.  (Note that this is *not* the directory separator symbol `/`.)
+
+So the above command could be written correctly as
+
+```bash
+cd /www/about\ me
+```
+
+When the shell encounters the `\` symbol before a space it will interpret that to mean that the space is part of the path rather than a separator of different parts of the command.
+
+> **_EXERCISE_**
+> 
+> Use the `cd` command to navigate to a directory in your system that contains a space in its name
+
+#### Paths with Wildcards (AKA Globs)
+
+You have already encountered the `ls` command to list files.  You should now be able to list files in directories using either an absolute or relative path.
+
+Examples:
+
+```bash
+# List files in the parent directory
+ls ..
+# List files in the user home directory
+ls ~
+# List files in the images folder inside the current working directory
+ls ./images
+# List the files in the directory three directories above the current working directory
+ls ../../../
+```
+
+There is one other useful way of writing paths that can be used to specify multiple files or directories in a single path:  a wildcard, or 'glob pattern'.
+
+The `*` symbol can be used in a path to represent any whole name or part of a name.
+
+For example, the path `*` represents *all* the files in the current working directory.  The path `*.png` represents all the files with the extension `.png` in the current working directory.
+
+Thus, a command like `ls *` will list all the files in the current working directory **and** all the files in the directories inside the current working directory.  Go ahead and try it in your shell!
+
+And a command like `ls *.png` will list all the files with the extension `.png` in the current working directory.
+
+A common way to list just the files and not the directories inside a particular directory is a command like `ls *.*`.  (But **be careful**: the `*.*` glob selects any directory or file names that have a `.` somewhere in the name, so this will not work if you have directories with a `.` in the name.)
+
+## File System Inspection
+
+There are a few commands aside from `ls` that are useful for inspecting files and their contents.
+
+### cat
+
+The `cat` command prints out the contents of a file.
+
+Example:
+
+```bash
+> cd /www
+> cat index.html
+<!DOCTYPE html>
+<html>
+<head><title>My Website</title></head>
+<body>Hello, world!</body>
+</html>
+```
+
+### head & tail
+
+The `head` and `tail` commands can be used to peek at the first or last lines of a file, respectively.  The number of lines can be controlled using the `-n` option, as in:
+
+```bash
+> cd /www
+> head -n3 index.html
+<!DOCTYPE html>
+<html>
+<head><title>My Website</title></head>
+>
+```
+
+The `-f` option of the `tail` command is particularly useful for inspecting log files that may be getting written to continuously:
+
+`tail -f somelog.txt`
+
+This command will prevent the tail command from stopping when it hits the end of the file.  Instead, it keeps running, and any new text added to the file will get printed to the shell!  To stop a `tail -f` press `Ctrl+c`.
+
+### nano
+
+The `nano` command loads a simple CLI text editor with which you can edit plain text files.  It is beyond the scope of this tutorial to explain in depth how to use nano.  The bottom of the nano user interface shows the commands that can be used within nano.  For example: `^X Exit`.  The `^` symbol in nano means the `Ctrl` button, so to exit nano press `Ctrl+x`.
+
+> **_EXERCISE_**
+>
+> Use the `cat`, `head`, `tail`, and `nano` commands to examine the contents of several file on your computer.
+
+## File System Manipulation
+
+### mkdir & rmdir
+
+You can create a new directory using the `mkdir` (make directory) command with the name of the directory as the argument.
+
+Example:
+
+```bash
+mkdir mynewdir
+```
+
+If (and only if!) a directory is empty, it can be removed using the `rmdir` command, as in
+
+```bash
+rmdir mynewdir
+```
+
+(See the `rm` command below for how to remove directories that are not empty.)
+
+> **_EXERCISE_**
+> 
+> **_NOTE:_** This and the following exercises are meant to be completed as a set.  You will create and manipulate several files and directories.  By the end of the exercises your file system should be as it was before you started.
+>
+> Use appropriate commands to complete the following:
+> - Create a new directory named `deleteme` inside your user home directory.  
+> - Inside the `deleteme` directory, create three new directories named `d1`, `d2`, and `d3`.
+> - Inside the `d1` directory, create a new directory named `sub`
+> - Remove the `d3` directory
+>
+> If you have done this exercise correctly, you should have the following directory structure:
+> ```
+> ~
+> +-- deleteme
+>     +-- d1
+>     |   +-- sub
+>     |
+>     +-- d2
+> ```
+>
+
+### touch
+
+The `touch` command can be used to create an empty file, as in
+
+```bash
+> cd ~
+> ls
+file1.txt file2.txt
+> touch myfile.txt
+> ls
+file1.txt file2.txt myfile.txt
+```
+
+> **_EXERCISE_**
+> 
+> Use appropriate commands to complete the following:
+> - Inside your `~/deleteme/d1` directory, create two empty files named `f1.txt` and `f2.txt`
+> - Inside your `~/deleteme/d1/sub` directory, create a file named `f3.txt`
+>
+> If you have done this exercise correctly, you should have the following directory structure:
+> ```
+> ~
+> +-- deleteme
+>     +-- d1
+>     |   +-- sub
+>     |   |   +-- f3.txt
+>     |   |
+>     |   +-- f1.txt
+>     |   +-- f2.txt
+>     |
+>     +-- d2
+> ```
+>
+
+### cp
+
+You can copy files using the `cp` command, which requires two arguments: a source and a destination.
+
+For example:
+
+```bash
+> cd ~
+> ls
+file1.txt file2.txt
+> cp file1.txt ./file1-copy.txt
+> ls
+file1.txt file1-copy.txt file2.txt
+```
+
+If the destination is a directory other than the current working directory, then the file will be copied with the same name to the destination directory.
+
+Example:
+
+```bash
+> cd ~
+> ls
+file1.txt file2.txt
+> ls ..  # no files in parent directory
+
+> cp file1.txt ..
+> ls ..
+file1.txt
+```
+
+Globs can be used to copy multiple files at once:
+
+```bash
+> cd ~
+> ls
+file1.txt file2.txt
+> ls ..  # no files in parent directory
+
+> cp *.txt ..
+> ls ..
+file1.txt file2.txt
+```
+
+The `-R` option can be used to copy entire directory structures recursively.  The following command copies the `/User/ali` directory and all its contents into a directory named `/ali-backup`
+
+```bash
+> cp -R /Users/ali /ali-backup
+```
+
+> **_EXERCISE_**
+> 
+> Use appropriate commands to complete the following:
+> - Copy all three of the text files you have created into your `d2` directory.  (Challenge: can you do it in a single command?)
+> - Make a copy of `~/deleteme/d1/f2.txt` at `~/deleteme/d1/f4.txt`
+> - Copy the contents of the `d1` directory into a new directory at `~/deleteme/d4`.
+>
+> If you have done this exercise correctly, you should have the following directory structure:
+> ```
+> ~
+> +-- deleteme
+>     +-- d1
+>     |   +-- sub
+>     |   |   +-- f3.txt
+>     |   |
+>     |   +-- f1.txt
+>     |   +-- f2.txt
+>     |   +-- f4.txt
+>     |
+>     +-- d2
+>     |   +-- f1.txt
+>     |   +-- f2.txt
+>     |   +-- f3.txt
+>     |
+>     +-- d4
+>     |   +-- sub
+>     |   |   +-- f3.txt
+>     |   |
+>     |   +-- f1.txt
+>     |   +-- f2.txt
+>     |   +-- f4.txt
+> ```
+>
+
+### mv
+
+You can move files to new locations using the `mv` command with two arguments:  the current path, and the desired path.
+
+For example, the command `mv file1.txt ..` moves `file1.txt` into the parent directory.
+
+#### Renaming Using mv
+
+You can also rename files using the `mv`:
+
+```bash
+> cd ~
+> ls
+file1.txt file2.txt
+> mv file1.txt file1renamed.txt
+> ls
+file1renamed.txt file2.txt
+```
+
+Or, you can move and rename a file simultaneously.  The following command moves the file named `file1.txt` into the `/www` directory with and renames it to `file.txt`:
+
+```bash
+mv file1.txt /www/file.txt
+```
+
+Moving and renaming can also be done with directories.  Unlike the `cp` command, no `-R` option is necessary to move an entire directory and its contents.  For example, the following command renames the `/www/about me` directory to `about-me`
+
+```bash
+mv /www/about\ me /www/about-me
+```
+
+(Note the use of the escaped space in the source path.  See [Paths and Spaces](#paths-and-spaces) above.)
+
+> **_CAUTION:_** If you specify a destination file name that already exists, the `mv` command will overwrite that file without warning!
+>
+> For example, consider the following shell session:
+>```bash
+>> cd ~
+>> ls
+>file1.txt file2.txt
+>> mv file1.txt file2.txt
+>> ls
+>file2.txt
+> # The original file2.txt was overwritten!  Oops!
+>```
+
+Finally, you can use globs to move multiple files at once.  The following command moves all files ending with `.txt` into the `/www` directory:
+
+```bash
+mv *.txt /www
+```
+
+> **_EXERCISE_**
+> 
+> Use appropriate commands to complete the following:
+> - Rename the `~/deleteme/d4` directory to `~/deleteme/d3`
+> - Rename the `~/deleteme/d1/f4.txt` file to `f5.txt`
+> - Move all the `.txt` files in `~/deleteme/d1` into the `d1/sub` directory.
+>
+> If you have done this exercise correctly, you should have the following directory structure:
+> ```
+> ~
+> +-- deleteme
+>     +-- d1
+>     |   +-- sub
+>     |       +-- f1.txt
+>     |       +-- f2.txt
+>     |       +-- f3.txt
+>     |       +-- f5.txt
+>     |
+>     +-- d2
+>     |   +-- f1.txt
+>     |   +-- f2.txt
+>     |   +-- f3.txt
+>     |
+>     +-- d3
+>     |   +-- sub
+>     |   |   +-- f3.txt
+>     |   |
+>     |   +-- f1.txt
+>     |   +-- f2.txt
+>     |   +-- f4.txt
+> ```
+>
+
+### rm
+
+The `rm` command can be used to remove files and directories.
+
+> **_CAUTION:_** Files removed using `rm` will *not* appear in your system's "trash can" or "recycle bin", meaning that an `rm` cannot be undone.  So be very careful when using this command!
+>
+> If you wish to be cautious, you can use the `-i` (interactive) option, which will cause the command to prompt for confirmation before each file it removes
+
+Here are some typical `rm` commands.
+
+Remove a specific file:
+
+```bash
+rm file.txt
+```
+
+Remove a list of files:
+
+```bash
+rm file1.txt file2.txt file3.txt
+```
+
+Remove a list of files using a glob (this command removes all `.txt` files in the working directory):
+
+```bash
+rm *.txt
+```
+
+Remove a directory and all its contents using the `-r` (recursive) option:
+
+```bash
+rm -r mydir
+```
+
+> **_EXERCISE_**
+> 
+> Use appropriate commands to complete the following:
+> - Remove the `d3/f4.txt` file
+> - Remove all the `.txt` files in the `d2` directory
+> - Remove the `~/deleteme` directory and all its contents!
+>
+> If you have done this exercise correctly, you should no longer have any of the files you created in these exercises.  Squeaky clean!
