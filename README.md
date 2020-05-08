@@ -25,18 +25,9 @@
             - [Relative Paths](#relative-paths)
             - [Paths and Spaces](#paths-and-spaces)
             - [Paths with Wildcards (AKA Globs)](#paths-with-wildcards-aka-globs)
-    - [File System Inspection](#file-system-inspection)
-        - [cat](#cat)
-        - [head & tail](#head--tail)
-        - [nano](#nano)
-    - [File System Manipulation](#file-system-manipulation)
-        - [mkdir & rmdir](#mkdir--rmdir)
-        - [touch](#touch)
-        - [cp](#cp)
-        - [mv](#mv)
-            - [Renaming Using mv](#renaming-using-mv)
-        - [rm](#rm)
-    - [The End!](#the-end)
+    - [Environment Inspection](#environment-inspection)
+        - [Environment Variables](#environment-variables)
+        - [Setting Environment Variables](#setting-environment-variables)
 
 <!-- /TOC -->
 
@@ -111,7 +102,7 @@ ls -a /Users/ali
 is a command that lists the contents of the directory `/Users/ali`, including hidden files.  The name of the command is `ls`.  The option `-a` causes the `ls` command to include hidden files in its output.  Finally, the argument `/Users/ali` is the directory for which the contents are to be listed.
 
 > **_NOTE:_**
-> You may notice the use of terms inside of angle brackets in the documentation for command line tools, a as in `ls <pathname>`. The angle-bracketed terms are usually placeholders describing what you should *actually* type when using the command.  You should *not* include the angle brackets in an actual command.  For example, `ls </Users/ali>` would be an incorrect interpretation of the previous documentation; `ls /Users/ali` would be correct.
+> You may notice the use of terms inside of angle brackets in the documentation for command line tools, as in `ls <pathname>`. The angle-bracketed terms are usually placeholders describing what you should *actually* type when using the command.  You should *not* include the angle brackets in an actual command.  For example, `ls </Users/ali>` would be an incorrect interpretation of the previous documentation; `ls /Users/ali` would be correct.
 
 Many commands can be used without any options or arguments at all.  For example, the command `ls` by itself simply lists all non-hidden files and directories in the current working directory.  (Don't worry if you don't understand the term "working directory". We will define that soon!)
 
@@ -150,7 +141,7 @@ The order of options *usually* does not matter.  The command below does the same
 ls -1 --all /Users/ali
 ```
 
-Note that we have mixed the use of short and long-form option names.  The command could of course also be using only short form options:
+Note that we have mixed the use of short and long-form option names.  The command could of course also be written using only short form options:
 
 ```bash
 ls -a -1 /Users/ali
@@ -193,7 +184,7 @@ man ls
 ```
 
 > **_NOTE:_**
-> Unfortunately, Git Bash does not include manual pages, but you can view the manuals for most commands on [this website](https://linux.die.net/man/).
+> Unfortunately, Git Bash does not include manual pages, but you can view the manuals for most commands using either the `--help` option or on [this website](https://linux.die.net/man/).
 
 > **_NOTE:_**
 > Manual pages can be quite long, and some shells will allow you to move up and down within the text using the `j` and `k` keys, respectively. You can also exit the manual page before you reach the end by typing `q` (for quit).
@@ -206,7 +197,7 @@ It is often important to know which version of a command is on your system, whic
 
 ## File System Navigation
 
-From this point on you should have a shell open on your computer and follow along by entering the commands into your shell.
+If you do not already have a shell open on your computer, you should do so now.  The best way to learn how to use a shell is to actually use one!  From this point on try to follow along by entering the commands into your shell.
 
 ### The Working Directory
 
@@ -248,7 +239,7 @@ For example, suppose you have the following directory structure on your computer
             +-- Documents/
 ```
 
-Here are a few paths in this structure:
+Here are a few valid paths in this structure:
 
 ```bash
 /
@@ -270,7 +261,7 @@ All of the above paths are absolute paths.  That is, they begin at the root of t
 
 You must list **every** sequential directory in a path, otherwise the path is invalid and the command will not be able to find the file or directory.
 
-For example, all the following paths are invalid:
+For example, given the directory structure shown above, all the following paths are invalid:
 
 ```bash
 /images/logo.png
@@ -284,7 +275,7 @@ The first path specifies a directory named 'images' in the root directory, but t
 >
 > Use the `cd` command to navigate to several different absolute paths in your system.  Use the `pwd` command to verify that your `cd` commands worked.
 
-> **_TIP:_** Most shells features 'tab completion', meaning that if you begin typing the name of a directory in a path and then press the `tab` key, then if what you have typed so far can only be one possible directory or file the shell will complete the name automatically.  If what you have typed so far is *not* a unique prefix, pressing `tab` a second time will print a list of directory and file names that start with what you have typed so far.
+> **_TIP:_** Most shells features 'tab completion', meaning that you can begin typing the name of a directory in a path and then press the `tab` key.  If what you have typed so far can only be one possible directory or file then the shell will complete the name automatically.  If what you have typed so far is *not* a unique prefix, pressing `tab` a second time will print a list of directory and file names that start with what you have typed so far.
 
 #### Relative Paths
 
@@ -319,7 +310,7 @@ Example:
 /www
 ```
 
-You may use multiple instances of `..` in a path
+You may use multiple instances of `..` in a path to navigate up multiple directories from the working directory:
 
 Example:
 
@@ -344,7 +335,7 @@ Example:
 /Users/ali/Documents
 ```
 
-And here as an example that combines the `~` and `..` symbols to change to the parent directory of the user's home directory.  (The `..` symbol does not need to be at the beginning of a path.)
+And here as an example that combines the `~` and `..` symbols to change to the parent directory of the user's home directory.  (The `..` symbol does not need to be at the beginning of a path.  You can read this path as "start at the user's home directory, then move one directory up from there".)
 
 ```bash
 > cd ~/..
@@ -354,7 +345,7 @@ And here as an example that combines the `~` and `..` symbols to change to the p
 
 > **_EXERCISE_**
 >
-> Use the `cd` command to navigate to several different directories in your system.  Use relative paths, and experiment with using various combinations of the `.`, `..`, and `~` symbols.  (Don't worry, you can't break anything with the `cd` command.)
+> Use the `cd` command to navigate to several different directories in your system.  Use relative paths, and experiment with using various combinations of the `.`, `..`, and `~` symbols.  (Experiment without fear!  You can't break anything with the `cd` command.)
 
 #### Paths and Spaces
 
@@ -405,13 +396,72 @@ And a command like `ls *.png` will list all the files with the extension `.png` 
 
 A common way to list just the files and not the directories inside a particular directory is a command like `ls *.*`.  (But **be careful**: the `*.*` glob selects any directory or file names that have a `.` somewhere in the name, so this will not work if you have directories with a `.` in the name.)
 
+## Environment Inspection
+
+### Environment Variables
+
+Your operating system and many of the programs on your computer rely on 'environment variables' for some configuration.  Environment variables are simply named values.  
+
+For example, the `PATH` environment variable is a list of paths that the operating system will search to find executable commands or programs.  When you enter a command in the shell, if a program with that name does not exist in one of the directories in `PATH` then the command will fail.
+
+> **_NOTE:_** Yes, that's right—each command you use in a shell is simply a small stand-alone program!  You can see which dierctory the program is in by using the `which` command, as in `which cd` or `which ls` or even `which which` :)
+
+There are many other environment variables that you will encounter as a programmer or computer administrator, but for now we'll leave them for you to discover!
+
+### Setting Environment Variables
+
+You may set the value of an environment variable in a shell by typing the name of the environment variable followed immediately (no spaces) by an `=` followed immediately (again, no spaces!) by the value.
+
+For example, 
+
+```bash
+> MY_ENV_VAR=somevalue
+> echo $MY_ENV_VAR
+somevalue
+> MY_ENV_VAR="a value with spaces needs quotes"
+```
+
+You can also use the value of other environment variables by prefixing the other variable's name with a `$`.  For example, the command below sets an environment variable named `MY_ENV_VAR` to have the same value as the `PATH` environment variable.
+
+```bash
+> MY_ENV_VAR=$PATH
+```
+
+You can even embed the value of other variables within some text, like so:
+
+```bash
+> MY_NAME=Ali
+> MY_GREETING="Hi, my name is $MY_NAME."
+> echo $MY_GREETING
+Hi, my name is Ali!
+
+### echo
+
+The `echo` command is useful for examining the values of environment variables.  The basic functionality of `echo` is to produce (or 'echo') output to the shell.  For example
+
+```bash
+> echo Hi!
+Hi!
+> echo "Use quotes to echo text with spaces"
+Use quotes to echo text with spaces
+```
+
+That example is obviously not very useful. However, consider the following shell session instead:
+
+```bash
+> echo $PATH
+/usr/local/opt/openssl@1.1/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Applications/Wireshark.app/Contents/MacOS
+```
+
+When you add a `$` in front of the name of an environment variable, `echo` will echo the the value of that environment variable to the shell!  (The command `echo PATH` would simply produce the text `PATH` on the shell.)
+
 ## File System Inspection
 
 There are a few commands aside from `ls` that are useful for inspecting files and their contents.
 
 ### cat
 
-The `cat` command prints out the contents of a file.
+The `cat` command can be used to con**cat**enate the contents of any number of files and print them to the shell.
 
 Example:
 
@@ -424,6 +474,40 @@ Example:
 <body>Hello, world!</body>
 </html>
 ```
+
+The following command would print the contents of all `.html` files in the `/www` directory:
+
+```bash
+cat /www/*.html
+```
+
+> **_NOTE:_**  
+> If you are wondering why this command isn't called `con`, you are not alone.  The reason is that when `cat` was first created there was already another command with the name `con`.  The `con` command is no longer a part of most Unix-style shells, but the `cat` command is still a useful tool today and has kept its name.
+
+### less
+
+The `cat` command usually prints the entire contents of a file to the shell.  In some environments (eg. a 'headless' server in which the only interface is a CLI shell) there is no way to 'scroll back' in the shell to view previous output.
+
+The `less` command can be used to view the contents of a file or other output, and it has the ability to navigate both forward and backward within the file.
+
+In this section you will learn how to use `less` to view the contents of a file.  See the [Redirecting Output](#redirecting-output) section for how to use `less` to view the output of other commands.
+
+As an example, suppose the `/www/index.html` file was a largish file that does not fit in a single shell screen.  The following command could be used to view its contents:
+
+`less /www/index.html`
+
+Once the command is running, it will display only the first page of lines but will not exit.  Instead, you may press the `j` 
+key to move down one line.  Pressing the `k` key will move back up one line (unless you are already at the top of the file).
+
+> **_NOTE:_** Why `j` and `k` for up and down?  It is an ergonomic choice: when you are touch typing, your right index finger is on the `j` key and the main thing you want to do in `less` is move down the output.  Similarly, the `k` key is under your right middle finger.  Thus, you do not have to move your hand to move up and down in the output.  
+
+If you would like to skip forward or back by a whole page, press `Ctrl+f` or `Ctrl+b`, respectively.
+
+You can also search for specific words in the output.  When `less` is running, press the `/` key and type your search term then press `enter` (or `return` depending on your keyboard).  `less` will automatically move to and highlight the first search result.  You can navigate forward and back through the search results by pressing `n` (for 'next') and `N` respectively
+
+To exit `less`, press `q` (quit).
+
+> **_NOTE:_** You might be wondering about the reason for the name `less`.  There is also a command called `more` which existed before `less` and works much the same as `less` except it does not allow reverse movement through the output.  The name `more` referred to the ability to manually load 'more' of the output into the shell; the name `less` was a silly play on the name `more`.
 
 ### head & tail
 
@@ -438,19 +522,71 @@ The `head` and `tail` commands can be used to peek at the first or last lines of
 >
 ```
 
+> **_NOTE:_** If the `-n` option is not specified, the default number of lines is usually 10
+
 The `-f` option of the `tail` command is particularly useful for inspecting log files that may be getting written to continuously:
 
 `tail -f somelog.txt`
 
-This command will prevent the tail command from stopping when it hits the end of the file.  Instead, it keeps running, and any new text added to the file will get printed to the shell!  To stop a `tail -f` press `Ctrl+c`.
+This command will prevent the tail command from stopping when it hits the end of the file.  Instead, it keeps running, and any new text added to the file will get printed to the shell in real time!  To stop a `tail -f` press `Ctrl+c`.
 
 ### nano
 
 The `nano` command loads a simple CLI text editor with which you can edit plain text files.  It is beyond the scope of this tutorial to explain in depth how to use nano.  The bottom of the nano user interface shows the commands that can be used within nano.  For example: `^X Exit`.  The `^` symbol in nano means the `Ctrl` button, so to exit nano press `Ctrl+x`.
 
+> **_NOTE:_** You will probably encounter two other command line text editors as you learn to use Unix-style shells: `emacs` and `vi`.  Both are excellent tools to learn, but they have steep learning curves that are beyond the scope of this tutorial.  They are also the source of endless online debates about which is superior :)  Nobody argues that `nano` is a great text editor, but it is easy to use. 
+
 > **_EXERCISE_**
 >
-> Use the `cat`, `head`, `tail`, and `nano` commands to examine the contents of several file on your computer.
+> - Use the `cat`, `less`, `head`, `tail`, and `nano` commands to examine the contents of several file on your computer.
+> - Open two separate shell windows/tabs.  In one, use `nano` to create a new file.  Add some text to this file and save it (but do not close `nano`).  In the other shell, use the `tail` command with the `-f` option to watch the end of the file you just created.  Now go back to your `nano` shell and repeatedly add new lines to your file then save.  You should see the contents of your file printed in your `tail` shell each time you save!
+
+## Redirecting Output
+
+### Redirecting to a File
+
+Sometimes commands can produce a lot of output.  It can be useful to save this output in a file instead of simply printing it to the shell.
+
+After *any* command, you can add the `>` symbol followed by a path to a file to store the output of that command to the specified file!
+
+For example, the command below is one way to make a copy of the `/www/index.html` file:
+
+```bash
+cat /www/index.html > /www/index-copy.html
+```
+
+### Redirecting to Other Commands
+
+You can also redirect the output of any command to any other command using the pipe symbol `|`.
+
+For example, suppose you want to quickly examine the contents of a large file like `/www/index.html`.  The following command could be used:
+
+```bash
+cat /www/index.html | less
+```
+
+The first part of the command would usually cause the contents of `/www/index.html` to be printed to the shell, but here the `|` symbol causes the output to be 'piped' to `less` instead.
+
+You might wonder why you would use the command above instead of one like `less /www/index.html`.  In fact, this latter way is probably the more direct approach in this case.
+
+However, the usefulness of the pipe symbol becomes more obvious when you consider commands that are not simply printing the contents of a file.
+
+For example, suppose you are trying to list the contents of a directory named 'tmp' with so many files in it that they do not all fit in one screen.  In this case, a command like
+
+```bash
+ls tmp
+```
+
+will produce too much output and you will only see the last set of files that fit in the shell screen.  But a command like
+
+```bash
+ls tmp | less
+```
+
+allows you to navigate and search through the list of files using `less`!
+
+> **_NOTE:_**  The pipe symbol is a very powerful part of Unix-style shells.  Essentially any command output can be piped as the input for any other command.  Furthermore, pipes can be chained (as in `somecommand | anothercommand | another | yetanother`).  This allows you to compose multiple commands into a single entry in the shell to perform quite complex tasks! 
+
 
 ## File System Manipulation
 
