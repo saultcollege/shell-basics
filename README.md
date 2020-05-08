@@ -534,7 +534,7 @@ This command will prevent the tail command from stopping when it hits the end of
 
 The `nano` command loads a simple CLI text editor with which you can edit plain text files.  It is beyond the scope of this tutorial to explain in depth how to use nano.  The bottom of the nano user interface shows the commands that can be used within nano.  For example: `^X Exit`.  The `^` symbol in nano means the `Ctrl` button, so to exit nano press `Ctrl+x`.
 
-> **_NOTE:_** You will probably encounter two other command line text editors as you learn to use Unix-style shells: `emacs` and `vi`.  Both are excellent tools to learn, but they have steep learning curves that are beyond the scope of this tutorial.  They are also the source of endless online debates about which is superior :)  Nobody argues that `nano` is a great text editor, but it is easy to use. 
+> **_NOTE:_** You will probably encounter two other command line text editors as you learn to use Unix-style shells: `emacs` and `vi`.  Both are excellent tools to learn, but they have steep learning curves that are beyond the scope of this tutorial.  They are also the source of endless online debates about which is superior.  Nobody argues that `nano` is a great text editor, but it is easy to use and it gets the job done :-) 
 
 > **_EXERCISE_**
 >
