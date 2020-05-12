@@ -29,6 +29,23 @@
     - [Environment Inspection](#environment-inspection)
         - [Environment Variables](#environment-variables)
         - [Setting Environment Variables](#setting-environment-variables)
+        - [echo](#echo)
+    - [File System Inspection](#file-system-inspection)
+        - [cat](#cat)
+        - [less](#less)
+        - [head & tail](#head--tail)
+        - [nano](#nano)
+    - [Redirecting Output](#redirecting-output)
+        - [Redirecting to a File](#redirecting-to-a-file)
+        - [Redirecting to Other Commands](#redirecting-to-other-commands)
+    - [File System Manipulation](#file-system-manipulation)
+        - [mkdir & rmdir](#mkdir--rmdir)
+        - [touch](#touch)
+        - [cp](#cp)
+        - [mv](#mv)
+            - [Renaming Using mv](#renaming-using-mv)
+        - [rm](#rm)
+    - [The End!](#the-end)
 
 <!-- /TOC -->
 
@@ -441,6 +458,7 @@ You can even embed the value of other variables within some text, like so:
 > MY_GREETING="Hi, my name is $MY_NAME."
 > echo $MY_GREETING
 Hi, my name is Ali!
+```
 
 ### echo
 
