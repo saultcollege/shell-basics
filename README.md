@@ -9,6 +9,7 @@
     - [The Interface](#the-interface)
             - [Sample CLI session](#sample-cli-session)
         - [Basic Command Syntax](#basic-command-syntax)
+        - [A Note on Documentation](#a-note-on-documentation)
         - [Command Arguments](#command-arguments)
         - [Command Options](#command-options)
             - [Multiple Options](#multiple-options)
@@ -101,13 +102,16 @@ ls -a /Users/ali
 
 is a command that lists the contents of the directory `/Users/ali`, including hidden files.  The name of the command is `ls`.  The option `-a` causes the `ls` command to include hidden files in its output.  Finally, the argument `/Users/ali` is the directory for which the contents are to be listed.
 
-> **_NOTE:_**
-> You may notice the use of terms inside of angle brackets in the documentation for command line tools, as in `ls <pathname>`. The angle-bracketed terms are usually placeholders describing what you should *actually* type when using the command.  You should *not* include the angle brackets in an actual command.  For example, `ls </Users/ali>` would be an incorrect interpretation of the previous documentation; `ls /Users/ali` would be correct.  
->
-> Some documentation formats also use an italic (slanted) font to indicate placeholder values, as in 
+Many commands can be used without any options or arguments at all.  For example, the command `ls` by itself simply lists all non-hidden files and directories in the current working directory.  (Don't worry if you don't understand the term "working directory". We will define that soon!)
+
+### A Note on Documentation
+
+You may notice the use of terms inside of angle brackets in the documentation for command line tools, as in `ls <pathname>`. The angle-bracketed terms are usually placeholders describing what you should *actually* type when using the command.  You should *not* include the angle brackets in an actual command.  For example, `ls </Users/ali>` would be an incorrect interpretation of the previous documentation; `ls /Users/ali` would be correct.  
+
+Some documentation formats also use an italic (slanted) font to indicate placeholder values, as in 
 <code>ls *pathname*</code>.  Here again the 'pathname' part is intended to be replaced.
 
-Many commands can be used without any options or arguments at all.  For example, the command `ls` by itself simply lists all non-hidden files and directories in the current working directory.  (Don't worry if you don't understand the term "working directory". We will define that soon!)
+You will also encounter terms inside of square brackets, as in `ls [--all]`.  Terms inside of square brackets are optional.  Again the square brackets are **not** part of the command, they are simply there to indicate that the part inside the brackets may or may not be included in the command.  So `ls` and `ls --all` are both valid interpretations of a documentation fragment like `ls [--all]`, but `ls [--all]` is not itself a valid command.
 
 ### Command Arguments
 
