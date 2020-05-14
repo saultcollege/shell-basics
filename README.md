@@ -8,8 +8,9 @@
         - [Examples of Command Line Shells](#examples-of-command-line-shells)
     - [The Interface](#the-interface)
             - [Sample CLI session](#sample-cli-session)
-        - [Basic Command Syntax](#basic-command-syntax)
+        - [Basic Command Format](#basic-command-format)
         - [A Note on Documentation](#a-note-on-documentation)
+        - [Shell Comments](#shell-comments)
         - [Command Arguments](#command-arguments)
         - [Command Options](#command-options)
             - [Multiple Options](#multiple-options)
@@ -107,7 +108,7 @@ With this simple usage pattern, you can examine and manipulate almost any aspect
 > **_NOTE:_**
 > Your shell will probably show a different prompt than the ones you see in this tutorial, but the usage pattern will be the same.
 
-### Basic Command Syntax
+### Basic Command Format
 
 Commands in a shell usually follow a typical format:  the name of a command, followed by zero or more options, followed by zero or more arguments.
 
@@ -129,6 +130,19 @@ Some documentation formats also use an italic (slanted) font to indicate placeho
 <code>ls *pathname*</code>.  Here again the 'pathname' part is intended to be replaced.
 
 You will also encounter terms inside of square brackets, as in `ls [--all]`.  Terms inside of square brackets are optional.  Again the square brackets are **not** part of the command, they are simply there to indicate that the part inside the brackets may or may not be included in the command.  So `ls` and `ls --all` are both valid interpretations of a documentation fragment like `ls [--all]`, but `ls [--all]` is not itself a valid command.
+
+### Shell Comments
+
+And one more note before we move on:  any text after a `#` symbol is ignored by most shells.  Such sections of text are usually called 'comments.  For example:
+
+```sh
+# This is a comment
+
+ls -la /Users/ali # Comments can be after a command
+
+# The next line is ignored because it starts with a #
+# ls -la /Users/ali
+```
 
 ### Command Arguments
 
@@ -428,7 +442,7 @@ Your operating system and many of the programs on your computer rely on 'environ
 
 For example, the `PATH` environment variable is a list of paths that the operating system will search to find executable commands or programs.  When you enter a command in the shell, if a program with that name does not exist in one of the directories in `PATH` then the command will fail.
 
-> **_NOTE:_** Yes, that's right—each command you use in a shell is simply a small stand-alone program!  You can see which dierctory the program is in by using the `which` command, as in `which cd` or `which ls` or even `which which` :)
+> **_NOTE:_** Yes, that's right—each command you use in a shell is simply a small stand-alone program!  You can see which dierctory the program is in by using the `which` command, as in `which cd` or `which ls` or even `which which` :-)
 
 There are many other environment variables that you will encounter as a programmer or computer administrator, but for now we'll leave them for you to discover!
 
@@ -563,7 +577,7 @@ The `nano` command loads a simple CLI text editor with which you can edit plain 
 
 > **_EXERCISE_**
 >
-> - Use the `cat`, `less`, `head`, `tail`, and `nano` commands to examine the contents of several file on your computer.
+> - Use the `cat`, `less`, `head`, `tail`, and `nano` commands to examine the contents of several files on your computer.
 > - Open two separate shell windows/tabs.  In one, use `nano` to create a new file.  Add some text to this file and save it (but do not close `nano`).  In the other shell, use the `tail` command with the `-f` option to watch the end of the file you just created.  Now go back to your `nano` shell and repeatedly add new lines to your file then save.  You should see the contents of your file printed in your `tail` shell each time you save!
 
 ## Redirecting Output
